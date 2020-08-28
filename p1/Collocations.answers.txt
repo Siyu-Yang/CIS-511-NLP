@@ -1,0 +1,51 @@
+Top 20 bigrams along with their Chi-?square scores:
+
+New York 9742413330.390501
+Wall Street 6683653980.147619
+Dow Jones 3391528016.1743045
+Hong Kong 2062856100.0451999
+real estate 1848685788.040466
+Merrill Lynch 1109358140.0241487
+Stock Exchange 937417659.9405072
+Los Angeles 682302903.5345204
+Navigation Mixte 646911636.013975
+Big Board 575038688.1160765
+S&P 500 502053296.0107982
+Lehman Hutton 475282008.01021194
+vice president 459359441.03583324
+San Francisco 454869802.04264593
+wo n't 341164292.9312601
+White House 329253651.2737145
+Sea Containers 308419872.0065662
+West Germany 293384720.01462126
+chief executive 267768072.70571557
+Shearson Lehman 264779706.01316515
+
+
+Top 20 bigrams along with their PMI scores:
+
+Wall Street 18.000542353162594
+Hong Kong 17.412755688260475
+real estate 17.357947451765483
+Dow Jones 17.31477527990027
+New York 17.14922407604098
+Merrill Lynch 17.102600759956637
+Navigation Mixte 16.832937193007535
+S&P 500 16.70618548736839
+Lehman Hutton 16.678786513180277
+Los Angeles 16.51299425833753
+Sea Containers 16.46256340471064
+Control Data 16.35336411274565
+Du Pont 16.27332140507211
+San Francisco 16.107529150229368
+West Germany 16.090999848278155
+Hurricane Hugo 16.090999848278155
+Georgia Gulf 16.090999848278155
+Shearson Lehman 16.039706553890607
+p.m. EST 16.039706553890607
+grand jury 16.039706553890607
+
+
+Which works better?
+
+According to the results, I believe Chi-Square works better to identify collocations. Chi-Square seems to have identified more commonly English collocations than PMI has. Almost every Chi-square bigram can be considered as a recognizable bigrams. But in PMI, I woule not consider Du Pont and p.m. EST to be recognizable bigrams. 

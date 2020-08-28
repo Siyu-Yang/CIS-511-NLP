@@ -1,0 +1,154 @@
+
+# CIS 511 NLP - Assignment 1 - Sentence Boundary Detection
+
+"""
+Created on Sat Feb 1 08:06:51 2019
+
+@author: Siyu Yang
+@unique name: siyuya
+@UMID:76998080
+"""
+
+import sys
+import re
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.preprocessing import LabelEncoder
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+
+#=== Global ===#
+VOWEL_REGEX = re.compile(r'[aeiouAEIOU]') 
+
+
+#=== Functions ===#
+
+#   1)  Load Files
+def load_file(filename):
+    list = []
+    with open(filename,'r') as f:
+        for line in f:
+            line = line.strip('\n')
+            element = line.split(' ')
+            list.append([element[0], element[1], element[2]])           
+    return list
+            
+#   2)  Create Feature Vectors
+def feature_label(list):
+    '''
+    ------------ core features -----------
+        1. Word to the left of “.” (L) 
+        2. Word to the right of “.” (R) 
+        3. Length of L < 3 (bool)
+        4. Is L capitalized (bool)
+        5. Is R capitalized (bool)
+    ------------ my own features ----------
+        6. Length of R < 5 (bool)
+        7. Does L contains a vowel (bool)
+        8. Does R contains a vowel (bool)
+        
+    @param list: List, the dataset that contains tokens
+    
+    @return: feature：List of eight features: [L, R, len_L, L_Cap, R_Cap, len_R, L_Vowel, R_Vowel]
+             label: List of the labels: ['EOS' or 'NEOS']
+    '''
+    feature = []
+    label = []
+    index = 0
+    for line in list:
+        if line[2] == 'EOS' or line[2] == 'NEOS':
+            # Label list
+            label.append(line[2])
+            
+            #-- 5 core features --#
+            # left
+            L = list[index][1][:-1]
+            #right
+            if index == len(list)-1: 
+                R = ' '
+            else: 
+                R = list[index+1][1]           
+            #len_L
+            len_L = True if (len(L) < 3) else False
+            #L_Cap
+            if L =='':
+                L_Cap = False    
+            elif (L[0].isupper()):
+                L_Cap = True
+            else:
+                L_Cap = False
+            #R_Cap
+            if R == ' ':
+                R_Cap = False
+            elif (R[0].isupper()):
+                R_Cap = True
+            else:
+                R_Cap = False
+                
+            #-- 3 my own features --#
+            #len_R
+            len_R = True if (len(R) < 5) else False
+            #L_Vowel
+            L_Vowel = True if (re.match(VOWEL_REGEX,L)) else False
+            #R_Vowel
+            R_Vowel = True if (re.match(VOWEL_REGEX,R)) else False
+            
+            # Store Features in Dictionary
+            features_dict={}
+            features_dict['L'] = L
+            features_dict['R'] = R
+            features_dict['len_L<3'] = len_L
+            features_dict['L_Cap'] = L_Cap
+            features_dict['R_Cap'] = R_Cap
+            features_dict['len_R<5'] = len_R
+            features_dict['L_Vowel'] = L_Vowel
+            features_dict['R_Vowel'] = R_Vowel
+            
+            feature.append(features_dict)   
+            
+        index += 1
+    return feature, label
+    
+#   3)  Run Decision Tree Algorithm
+def run_decision_tree(train_data, train_label, test_data, test_label):
+    '''
+    @param:
+    train_data: the words in train dataset
+    train_label: the label of words in train dataset
+    test_data: the words in test dataset
+    test_label: the label of words in test dataset
+    
+    @return:
+    accuracy_score: the accuracy of this system
+    '''
+    # encode features & labels
+    DictVec = DictVectorizer()
+    LabelEn = LabelEncoder()  
+    # train data = fit.transform
+    train_data = DictVec.fit_transform(train_data) 
+    train_label = LabelEn.fit_transform(train_label)
+    # test data = transform
+    test_data = DictVec.transform(test_data) 
+    test_label = LabelEn.transform(test_label)
+    
+    entropy_clf = DecisionTreeClassifier(criterion = "entropy")
+    entropy_clf.fit(train_data, train_label)
+    Y_predict = entropy_clf.predict(test_data) 
+    
+    return accuracy_score(test_label,Y_predict)
+
+
+if __name__ == '__main__':
+    # 1)  Load files
+    train_file = load_file(sys.argv[1])
+    test_file = load_file(sys.argv[2])
+    
+    # 2)  Create feature vectors and labels from train & test data
+    train_data, train_label = feature_label(train_file)
+    test_data, test_label = feature_label(test_file)
+    
+    # 3)  Run decision tree algorithm and return the accuracy 
+    accuracy = run_decision_tree(train_data, train_label, test_data, test_label)
+    
+    # print accuracy
+    print ("The accuracy of this system is:", accuracy)

@@ -1,0 +1,12 @@
+My three additional features are:
+
+1) Length of R < 5 ---- length of right word is shorter than 5 or not (bool)
+2) Does L contains a vowel ---- left word contains vowels or not (bool) 
+3) Does R contains a vowel ---- right word contains vowels or not (bool) 
+
+
+The accuracy of my system are:
+
+1) Using all 8 features: 0.9921146953405018
+2) Using only 5 core features: 0.9915173237753883
+3) Using only my 3 own features: 0.7540023894862604
