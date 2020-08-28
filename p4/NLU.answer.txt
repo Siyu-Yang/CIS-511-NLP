@@ -1,0 +1,12 @@
+The accuracy is : 0.9244363193174894
+
+
+
+
+The three additional features are:
+
+1. Does the token start with a vowel?
+
+2. Is the length of left word < 4 or not?
+
+3. Is the right word contains a "." or not?
