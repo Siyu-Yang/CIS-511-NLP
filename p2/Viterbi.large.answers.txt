@@ -1,0 +1,7 @@
+﻿Name:Siyu Yang  unique name: siyuya
+
+Viterbi algorithm tag prediction accuracy = 94.25%
+
+Simple baseline accuracy = 91.87%
+
+

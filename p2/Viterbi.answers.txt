@@ -1,0 +1,23 @@
+﻿Name:Siyu Yang  unique name: siyuya
+
+Viterbi algorithm tag prediction accuracy = 88.36%
+
+Simple baseline accuracy = 86.31%
+
+Analyze the 3 errors :
+
+1)
+'LASHED' was predicted as NP rather than the truth of VBD.
+Reason and fix : 'LASHED' only appears in train data not in test data. Thus, the prob of this word is 1/|V| after smoothing. We can fix that by enlarging the train dataset, or change another smoothing method.
+
+2)
+'on' was predicted as IN rather than the truth of RP.
+Reason and fix: Pr(IN/VBD) = 0.124 and Pr(RP/VBD) = 0.0095 so it is more likely to classify it into IN. We can fix that by  using bigram to take 'vote on' as a whole.
+
+3)
+'most' was predicted as JJS rather than the truth of RBS.
+Reason and fix: P(JJS/JJ) = 0.109 and P(RBS/JJ) = 0.0001 so it is more likely to classify it into JJS. We can fix that by  using bigram to take 'most powerful' as a whole.
+
+
+
+
